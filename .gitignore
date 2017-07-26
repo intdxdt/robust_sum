@@ -12,4 +12,5 @@ Cargo.lock
 **/*.rs.bk
 .idea/
 *.iml
+CMakeLists.txt
 
