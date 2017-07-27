@@ -1,12 +1,12 @@
 use std::f64;
 
 ///robust sum
-pub fn robust_sum(e: Vec<f64>, f: Vec<f64>) -> Vec<f64> {
+pub fn robust_sum(e: &[f64], f: &[f64]) -> Vec<f64> {
     return linear_expansion_sum(e, f);
 }
 
 ///linear expansion sum
-fn linear_expansion_sum(e: Vec<f64>, f: Vec<f64>) -> Vec<f64> {
+fn linear_expansion_sum(e: &[f64], f: &[f64]) -> Vec<f64> {
     let ne = e.len();
     let nf = f.len();
     if ne == 1 && nf == 1 {
@@ -148,12 +148,7 @@ fn linear_expansion_sum(e: Vec<f64>, f: Vec<f64>) -> Vec<f64> {
         count += 1;
     }
 
-    let mut gv = Vec::with_capacity(count);
-    for i in 0..count {
-        gv.push(g[i])
-    }
-
-    return gv;
+    g[0..count].to_vec()
 }
 
 ///scalar sum: easy case: add two scalars
@@ -186,15 +181,15 @@ mod robust_sum_test {
 
     #[test]
     fn test_robust_sum() {
-        assert_eq!(robust_sum(vec!(1., 64.0), vec!(-1e-64, 1e64)), [-1e-64, 65., 1e64]);
-        assert_eq!(robust_sum(vec!(0.), vec!(0.)), [0.]);
-        assert_eq!(robust_sum(vec!(0.), vec!(1.)), [1.]);
-        assert_eq!(robust_sum(vec!(1., 1e64), vec!(1e-64, 2.)), [1e-64, 3., 1e64]);
-        assert_eq!(robust_sum(vec!(1.), vec!(1e-64, 1e-16)), [1e-64, 1e-16, 1.]);
+        assert_eq!(robust_sum(&vec!(1., 64.0), &vec!(-1e-64, 1e64)), [-1e-64, 65., 1e64]);
+        assert_eq!(robust_sum(&vec!(0.), &vec!(0.)), [0.]);
+        assert_eq!(robust_sum(&vec!(0.), &vec!(1.)), [1.]);
+        assert_eq!(robust_sum(&vec!(1., 1e64), &vec!(1e-64, 2.)), [1e-64, 3., 1e64]);
+        assert_eq!(robust_sum(&vec!(1.), &vec!(1e-64, 1e-16)), [1e-64, 1e-16, 1.]);
 
         for i in -10..(10 + 1) {
             for j in -10..(10 + 1) {
-                assert_eq!(robust_sum(vec!(i as f64), vec!(j as f64)), [(i + j) as f64]);
+                assert_eq!(robust_sum(&vec!(i as f64), &vec!(j as f64)), [(i + j) as f64]);
             }
         }
 
@@ -206,11 +201,11 @@ mod robust_sum_test {
             nois.push(2f64.powi(-1000 + 53 * i));
             expect.push(2f64.powi(-999 + 53 * i));
         }
-        let x = robust_sum(nois.clone(), nois.clone());
+        let x = robust_sum(&nois, &nois);
         assert!(cmp(x, expect));
         // t.ok(validate(x))
 
-        assert!(cmp(robust_sum(vec!(0.), vec!(1., 1e64)), vec!(1., 1e64)));
+        assert!(cmp(robust_sum(&vec!(0.), &vec!(1., 1e64)), vec!(1., 1e64)));
 
         // var s = [0]
         // for(var i=0; i<1000; ++i) {
