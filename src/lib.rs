@@ -2,21 +2,21 @@ use std::f64;
 
 ///robust sum
 pub fn robust_sum(e: &[f64], f: &[f64]) -> Vec<f64> {
-    return linear_expansion_sum(e, f);
+    linear_expansion(e, f)
 }
 
 ///linear expansion sum
-fn linear_expansion_sum(e: &[f64], f: &[f64]) -> Vec<f64> {
+fn linear_expansion(e: &[f64], f: &[f64]) -> Vec<f64> {
     let ne = e.len();
     let nf = f.len();
     if ne == 1 && nf == 1 {
         return scalar_scalar(e[0], f[0]);
     }
-    let n = ne + nf;
+    let n: usize = ne + nf;
+    let mut count: usize = 0;
+    let mut eptr: usize = 0;
+    let mut fptr: usize = 0;
     let mut g = vec![0.0; n];
-    let mut count = 0;
-    let mut eptr = 0;
-    let mut fptr = 0;
     let mut ei = e[eptr];
     let mut ea = ei.abs();
     let mut fi = f[fptr];
@@ -162,7 +162,7 @@ fn scalar_scalar(a: f64, b: f64) -> Vec<f64> {
     if y != 0.0 {
         return vec!(y, x);
     }
-    return vec!(x);
+    vec!(x)
 }
 
 
