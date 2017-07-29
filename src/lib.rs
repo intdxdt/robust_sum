@@ -12,7 +12,7 @@ fn linear_expansion(e: &[f64], f: &[f64]) -> Vec<f64> {
     if ne == 1 && nf == 1 {
         return scalar_scalar(e[0], f[0]);
     }
-    let n: usize = ne + nf;
+    let n = ne + nf;
     let mut count: usize = 0;
     let mut eptr: usize = 0;
     let mut fptr: usize = 0;
