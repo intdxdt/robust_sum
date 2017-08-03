@@ -168,7 +168,17 @@ fn scalar_scalar(a: f64, b: f64) -> Vec<f64> {
 
 #[cfg(test)]
 mod robust_sum_test {
+     extern crate rand;
+    extern crate validate_robust_seq;
+
+    use self::rand::random;
     use super::robust_sum;
+    use self::validate_robust_seq::validate_sequence as validate;
+
+
+    fn rand() -> f64 {
+        random::<f64>()
+    }
 
     fn cmp(va: Vec<f64>, vb: Vec<f64>) -> bool {
         (va.len() == vb.len()) && va.iter().zip(vb).all(|(a, b)| f64_same_val(*a, b))
@@ -193,7 +203,13 @@ mod robust_sum_test {
             }
         }
 
-        // t.ok(validate(sum([ 5.711861227349496e-133, 1e-116 ], [ 5.711861227349496e-133, 1e-116 ])))
+        assert!(validate(
+            &robust_sum(
+                &vec!(5.711861227349496e-133, 1e-116),
+                &vec!(5.711861227349496e-133, 1e-116),
+            )
+        ));
+
 
         let mut nois = Vec::<f64>::with_capacity(10);
         let mut expect = Vec::<f64>::with_capacity(10);
@@ -202,16 +218,16 @@ mod robust_sum_test {
             expect.push(2f64.powi(-999 + 53 * i));
         }
         let x = robust_sum(&nois, &nois);
-        assert!(cmp(x, expect));
-        // t.ok(validate(x))
+        assert!(cmp(x.clone(), expect));
+        assert!(validate(&x));
 
         assert!(cmp(robust_sum(&vec!(0.), &vec!(1., 1e64)), vec!(1., 1e64)));
 
-        // var s = [0]
-        // for(var i=0; i<1000; ++i) {
-        // s = sum(s, [Math.random() * Math.pow(2, Math.random()*1800-900)])
-        // t.ok(validate(s))
-        // }
+        let mut s = vec![0.0];
+        for _ in 0..1000 {
+            s = robust_sum(&s, &vec![rand() * 2f64.powf(rand() * 1800. - 900.)]);
+            assert!(validate(&s))
+        }
     }
 }
 
