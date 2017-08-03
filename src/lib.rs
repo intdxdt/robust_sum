@@ -168,7 +168,7 @@ fn scalar_scalar(a: f64, b: f64) -> Vec<f64> {
 
 #[cfg(test)]
 mod robust_sum_test {
-     extern crate rand;
+    extern crate rand;
     extern crate validate_robust_seq;
 
     use self::rand::random;
@@ -176,7 +176,7 @@ mod robust_sum_test {
     use self::validate_robust_seq::validate_sequence as validate;
 
 
-    fn rand() -> f64 {
+    fn rnd() -> f64 {
         random::<f64>()
     }
 
@@ -225,7 +225,7 @@ mod robust_sum_test {
 
         let mut s = vec![0.0];
         for _ in 0..1000 {
-            s = robust_sum(&s, &vec![rand() * 2f64.powf(rand() * 1800. - 900.)]);
+            s = robust_sum(&s, &vec![rnd() * 2f64.powf(rnd() * 1800. - 900.)]);
             assert!(validate(&s))
         }
     }
