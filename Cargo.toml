@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["Titus Tienaah <titus.intdxdt@gmail.com>"]
 
 [dependencies]
-validate_robust_seq = { git = "https://github.com/intdxdt/validate_robust_seq", branch = "master" }
 
 [dev-dependencies]
 rand = "0.3.15"
+validate_robust_seq = { git = "https://github.com/intdxdt/validate_robust_seq", branch = "master" }
