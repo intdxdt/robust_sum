@@ -13,10 +13,10 @@ fn linear_expansion(e: &[f64], f: &[f64]) -> Vec<f64> {
         return scalar_scalar(e[0], f[0]);
     }
     let n = ne + nf;
-    let mut count: usize = 0;
-    let mut eptr: usize = 0;
-    let mut fptr: usize = 0;
-    let mut g = vec![0.0; n];
+    let mut count = 0usize;
+    let mut eptr  = 0usize;
+    let mut fptr  = 0usize;
+    let mut g = vec![0f64; n];
     let mut ei = e[eptr];
     let mut ea = ei.abs();
     let mut fi = f[fptr];
@@ -177,6 +177,7 @@ mod robust_sum_test {
 
 
     fn rnd() -> f64 {
+        let op = Option(2);
         random::<f64>()
     }
 
