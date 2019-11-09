@@ -1,5 +1,3 @@
-use std::f64;
-
 ///robust sum
 pub fn robust_sum(e: &[f64], f: &[f64]) -> Vec<f64> {
     linear_expansion(e, f)
@@ -177,7 +175,6 @@ mod robust_sum_test {
 
 
     fn rnd() -> f64 {
-        let op = Option(2);
         random::<f64>()
     }
 
